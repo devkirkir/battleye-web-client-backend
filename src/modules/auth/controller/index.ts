@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import db from "#db";
 import { Type } from "@sinclair/typebox";
 
 import type { FastifyInstance, HookHandlerDoneFunction } from "fastify";
@@ -14,12 +14,6 @@ function authController(
   done: HookHandlerDoneFunction,
 ) {
   fastify.post("/login", { schema: { body: RequestSchema } }, (request, reply) => {
-    try {
-      const data = fs.readFileSync("user.json");
-    } catch (err) {
-      console.log(err);
-    }
-
     reply.send("ok");
   });
 

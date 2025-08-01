@@ -1,3 +1,4 @@
 .env
 /node_modules
-user.json
+/dist
+/**/*/app.db

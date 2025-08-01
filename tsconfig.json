@@ -7,10 +7,13 @@
     "skipLibCheck": true,
     "strict": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
-      "#/*": ["*"],
-      "#rcon/*": ["rcon/*"]
+      "#config/*": ["./config/*"],
+      "#db/*": ["./db/index.js"],
+      "#utils/*": ["./utils/index.js"],
+      "#rcon/*": ["./modules/rcon/*"]
     }
   },
   "exclude": ["node_modules"]
