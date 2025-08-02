@@ -5,4 +5,10 @@ const adapters = {
   sqlite,
 };
 
-export default adapters[appConfig.db.adapterDB];
+const DBAdapter = adapters[appConfig.db.adapterDB];
+
+if (!DBAdapter) {
+  throw new Error(`Unsupported DB adapter: ${appConfig.db.adapterDB}`);
+}
+
+export default DBAdapter;
