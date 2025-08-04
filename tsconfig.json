@@ -12,8 +12,9 @@
     "paths": {
       "#config/*": ["./config/*"],
       "#db/*": ["./db/index.js"],
-      "#utils/*": ["./utils/index.js"],
-      "#rcon/*": ["./modules/rcon/*"]
+      "#auth/*": ["./modules/auth/*"],
+      "#rcon/*": ["./modules/rcon/*"],
+      "#ws/*": ["./modules/ws/*"]
     }
   },
   "exclude": ["node_modules"]

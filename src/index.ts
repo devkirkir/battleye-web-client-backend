@@ -1,16 +1,14 @@
-import Fastify from "fastify";
-import appConfig from "#config/index.js";
 import websocket, { type WebSocket } from "@fastify/websocket";
 import RCON from "battleye-node";
-import DBAdapter from "#db";
-
-// TODO add aliases
-
-import authController from "./modules/auth/controller/index.js";
-import rconController from "./modules/rcon/controller/index.js";
-import wsController from "./modules/ws/controller/index.js";
-
 import type { FastifyInstance } from "fastify";
+import Fastify from "fastify";
+
+import authController from "#auth/controller/index.js";
+import appConfig from "#config/index.js";
+import DBAdapter from "#db";
+import rconController from "#rcon/controller/index.js";
+import wsController from "#ws/controller/index.js";
+
 const app: FastifyInstance = Fastify({
   logger: true,
 });

@@ -1,8 +1,7 @@
-import { Type } from "@sinclair/typebox";
-import { rconPool } from "index.js";
-
 import type { Static } from "@sinclair/typebox";
+import { Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
+import { rconPool } from "index.js";
 
 const RequestSchema = Type.Object({
   command: Type.String(),

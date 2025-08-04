@@ -1,10 +1,11 @@
-import Database, { Database as DatabaseType } from "better-sqlite3";
-import path from "node:path";
 import fs from "node:fs";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
-import appConfig from "#config/index.js";
 
+import Database, { Database as DatabaseType } from "better-sqlite3";
 import { type DatabaseAdapter } from "types/db.js";
+
+import appConfig from "#config/index.js";
 
 export class SqliteAdapter implements DatabaseAdapter {
   private db: DatabaseType | null = null;
@@ -12,7 +13,7 @@ export class SqliteAdapter implements DatabaseAdapter {
   connect() {
     if (this.db) return;
 
-    let dirPath = path.dirname(fileURLToPath(import.meta.url)),
+    const dirPath = path.dirname(fileURLToPath(import.meta.url)),
       dataDir = path.join(dirPath, "/data");
 
     if (!fs.existsSync(dataDir)) {

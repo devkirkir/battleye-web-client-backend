@@ -1,6 +1,4 @@
-import db from "#db";
 import { Type } from "@sinclair/typebox";
-
 import type { FastifyInstance, HookHandlerDoneFunction } from "fastify";
 
 const RequestSchema = Type.Object({

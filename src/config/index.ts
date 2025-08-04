@@ -17,7 +17,6 @@ const appConfig: AppConfig = {
     port: Number(process.env.APP_PORT) || 5000,
   },
   db: {
-    // пойдет)))
     adapterDB: (process.env.DB_ADAPTER || "sqlite") as SupportedAdapters,
     logs: !!process.env.DB_LOGS || true,
   },

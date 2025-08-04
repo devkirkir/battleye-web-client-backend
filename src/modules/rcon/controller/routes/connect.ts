@@ -1,9 +1,9 @@
-import rconService from "../../service/index.js";
+import type { Static } from "@sinclair/typebox";
 import { Type } from "@sinclair/typebox";
+import type { FastifyInstance } from "fastify";
 import { rconPool } from "index.js";
 
-import type { FastifyInstance } from "fastify";
-import type { Static } from "@sinclair/typebox";
+import rconService from "../../service/index.js";
 
 const RequestSchema = Type.Object({
   address: Type.String(),
@@ -34,7 +34,7 @@ async function connectRoute(fastify: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      let response = await rconService().connect(request.body);
+      const response = await rconService().connect(request.body);
 
       if (!response.isConnected) return reply.status(400).send({ error: response.errorMsg });
 

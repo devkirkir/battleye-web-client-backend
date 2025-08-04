@@ -1,4 +1,5 @@
 import RCON from "battleye-node";
+
 import type { RequestSchemaType } from "../../controller/routes/connect.js";
 
 interface ConnectPromiseSuccess {
