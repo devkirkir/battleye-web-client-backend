@@ -6,8 +6,6 @@ import appConfig from "#config/index.js";
 
 import { type DatabaseAdapter } from "types/db.js";
 
-// TODO create universal methods for sql dbs
-
 export class SqliteAdapter implements DatabaseAdapter {
   private db: DatabaseType | null = null;
 
@@ -28,35 +26,15 @@ export class SqliteAdapter implements DatabaseAdapter {
     this.initData();
   }
 
-  selectOne(schema: string, arg: string): unknown {
-    if (!this.db) throw new Error("Database not initialized");
-
-    return this.db.prepare(schema).get(arg);
-  }
-
-  selectAll(schema: string): unknown {
-    if (!this.db) throw new Error("Database not initialized");
-
-    return this.db.prepare(schema).all();
-  }
-
-  insert(schema: string, ...args: string[]): unknown {
-    if (!this.db) throw new Error("Database not initialized");
-
-    return this.db.prepare(schema).run(...args);
-  }
-
-  query(schema: string): unknown {
-    if (!this.db) throw new Error("Database not initialized");
-
-    return this.db.prepare(schema).run();
-  }
-
   private initData() {
     if (!this.db) throw new Error("Database not initialized");
 
-    if (!this.selectOne("SELECT name FROM sqlite_master WHERE type='table' and name=?", "users")) {
-      this.query(`
+    const isTableUserExist = this.db
+      .prepare("SELECT name FROM sqlite_master WHERE type='table' and name=?")
+      .get("users");
+
+    if (!isTableUserExist) {
+      this.db.prepare(`
         CREATE TABLE users (
           id INTEGER PRIMARY KEY,
           username TEXT UNIQUE NOT NULL,
@@ -67,12 +45,12 @@ export class SqliteAdapter implements DatabaseAdapter {
       if (appConfig.db.logs) console.log(`[DB] Users table created!`);
     }
 
-    let users = this.db.prepare("SELECT * FROM users").all();
+    const users = this.db.prepare("SELECT * FROM users").all();
 
     if (!users.length) {
-      this.insert("INSERT INTO users (username, password) VALUES (?,?)", "admin", "12345");
+      this.db.prepare("INSERT INTO users (username, password) VALUES (?,?)").run("admin", "12345");
 
-      if (appConfig.db.logs) console.log(`[DB] User created!`);
+      if (appConfig.db.logs) console.log(`[DB] Default user created!`);
     }
   }
 }
