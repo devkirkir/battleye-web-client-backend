@@ -30,8 +30,7 @@ async function sendCommand(fastify: FastifyInstance) {
       },
     },
     (request, reply) => {
-      if (rconPool.size === 0)
-        return reply.status(400).send({ error: "RCON Instance is not created" });
+      if (rconPool.size === 0) return reply.status(400).send({ error: "RCON Instance is not created" });
 
       // TODO сделать нормальную авторизацию
       rconPool.get("1")?.commandSend(request.body.command);

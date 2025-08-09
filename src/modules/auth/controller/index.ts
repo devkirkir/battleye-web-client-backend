@@ -1,19 +1,9 @@
-import { Type } from "@sinclair/typebox";
 import type { FastifyInstance, HookHandlerDoneFunction } from "fastify";
 
-const RequestSchema = Type.Object({
-  username: Type.String(),
-  password: Type.String(),
-});
+import login from "./routes/login.js";
 
-function authController(
-  fastify: FastifyInstance,
-  option: { prefix: string },
-  done: HookHandlerDoneFunction,
-) {
-  fastify.post("/login", { schema: { body: RequestSchema } }, (request, reply) => {
-    reply.send("ok");
-  });
+function authController(fastify: FastifyInstance, option: { prefix: string }, done: HookHandlerDoneFunction) {
+  login(fastify);
 
   done();
 }

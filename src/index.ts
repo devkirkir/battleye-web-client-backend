@@ -25,5 +25,5 @@ app.register(wsController, { prefix: "/ws" });
 app.listen({ port: appConfig.app.port || 5000 }, (err) => {
   if (err) return;
 
-  new DBAdapter().connect();
+  DBAdapter.connect();
 });

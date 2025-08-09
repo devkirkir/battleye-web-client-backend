@@ -21,7 +21,7 @@ const ReplyErrorSchema = Type.Object({
 
 export type RequestSchemaType = Static<typeof RequestSchema>;
 
-async function connectRoute(fastify: FastifyInstance) {
+async function connect(fastify: FastifyInstance) {
   return fastify.post<{ Body: RequestSchemaType }>(
     "/connect",
     {
@@ -46,4 +46,4 @@ async function connectRoute(fastify: FastifyInstance) {
   );
 }
 
-export default connectRoute;
+export default connect;

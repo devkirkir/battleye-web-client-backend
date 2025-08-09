@@ -1,14 +1,10 @@
 import type { FastifyInstance, HookHandlerDoneFunction } from "fastify";
 
-import connectRoute from "./routes/connect.js";
+import connect from "./routes/connect.js";
 import sendCommand from "./routes/sendCommand.js";
 
-function rconController(
-  fastify: FastifyInstance,
-  options: { prefix: string },
-  done: HookHandlerDoneFunction,
-) {
-  connectRoute(fastify);
+function rconController(fastify: FastifyInstance, options: { prefix: string }, done: HookHandlerDoneFunction) {
+  connect(fastify);
   sendCommand(fastify);
 
   done();
