@@ -1,4 +1,4 @@
-import { FastifyInstance, HookHandlerDoneFunction } from "fastify";
+import type { FastifyInstance, HookHandlerDoneFunction } from "fastify";
 import { wsConnection } from "index.js";
 
 function WSController(fastify: FastifyInstance, options: { prefix: string }, done: HookHandlerDoneFunction) {

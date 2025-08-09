@@ -1,3 +1,4 @@
+import fastifyCookie from "@fastify/cookie";
 import websocket, { type WebSocket } from "@fastify/websocket";
 import RCON from "battleye-node";
 import type { FastifyInstance } from "fastify";
@@ -17,6 +18,7 @@ export const rconPool = new Map<string, RCON>();
 export const wsConnection: { client: WebSocket | null } = { client: null };
 
 await app.register(websocket);
+app.register(fastifyCookie);
 
 app.register(authController, { prefix: "/auth" });
 app.register(rconController, { prefix: "/rcon" });

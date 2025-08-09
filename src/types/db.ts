@@ -1,6 +1,6 @@
-import { LoginUserData } from "./auth.js";
+import type { LoginUserData } from "./auth.js";
 
 export interface DatabaseAdapter {
   connect(): void;
-  login(userData: LoginUserData): Promise<boolean>;
+  login(userData: LoginUserData): Promise<boolean | string>;
 }

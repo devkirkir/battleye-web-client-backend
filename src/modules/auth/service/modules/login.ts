@@ -1,4 +1,4 @@
-import { LoginUserData } from "types/auth.js";
+import type { LoginUserData } from "types/auth.js";
 
 import DBAdapter from "#db";
 

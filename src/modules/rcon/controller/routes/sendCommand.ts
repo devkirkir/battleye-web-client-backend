@@ -1,5 +1,4 @@
-import type { Static } from "@sinclair/typebox";
-import { Type } from "@sinclair/typebox";
+import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
 import { rconPool } from "index.js";
 
