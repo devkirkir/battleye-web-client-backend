@@ -10,6 +10,10 @@ interface AppConfig {
     adapterDB: SupportedAdapters;
     logs?: boolean;
   };
+  labels: {
+    db: string;
+    dbError: string;
+  };
 }
 
 const appConfig: AppConfig = {
@@ -19,6 +23,10 @@ const appConfig: AppConfig = {
   db: {
     adapterDB: (process.env.DB_ADAPTER || "sqlite") as SupportedAdapters,
     logs: !!process.env.DB_LOGS || true,
+  },
+  labels: {
+    db: "[DB]",
+    dbError: "[DB ERROR]",
   },
 };
 

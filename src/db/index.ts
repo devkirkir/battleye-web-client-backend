@@ -9,7 +9,7 @@ const adapters = {
 const DBAdapter = adapters[appConfig.db.adapterDB];
 
 if (!DBAdapter) {
-  throw new Error(`Unsupported DB adapter: ${appConfig.db.adapterDB}`);
+  throw new Error(`${appConfig.labels.dbError} Unsupported DB adapter: ${appConfig.db.adapterDB}`);
 }
 
 export default DBAdapter;
