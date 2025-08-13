@@ -1,6 +1,5 @@
 import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
-import { rconPool } from "index.js";
 
 const RequestSchema = Type.Object({
   command: Type.String(),
@@ -17,7 +16,7 @@ const ReplyErrorSchema = Type.Object({
 
 export type RequestSchemaType = Static<typeof RequestSchema>;
 
-function sendCommand(fastify: FastifyInstance) {
+function send(fastify: FastifyInstance) {
   return fastify.post<{ Body: RequestSchemaType }>(
     "/send",
     {
@@ -30,14 +29,17 @@ function sendCommand(fastify: FastifyInstance) {
       },
     },
     (request, reply) => {
-      if (rconPool.size === 0) return reply.status(400).send({ success: false, msg: "RCON Instance is not created" });
+      if (fastify.rconPool.size === 0 || !request.userId)
+        return reply.status(400).send({ success: false, msg: "RCON Instance is not created" });
 
-      // TODO сделать нормальную авторизацию
-      rconPool.get("1")?.commandSend(request.body.command);
+      const rcon = fastify.rconPool.get(request.userId);
+      if (!rcon) return reply.status(400).send({ success: false, msg: "RCON Instance is not created" });
+
+      rcon.commandSend(request.body.command);
 
       reply.send({ success: true });
     },
   );
 }
 
-export default sendCommand;
+export default send;

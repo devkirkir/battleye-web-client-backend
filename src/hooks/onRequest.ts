@@ -1,5 +1,6 @@
-import DBAdapter from "#db";
 import type { FastifyReply, FastifyRequest } from "fastify";
+
+import DBAdapter from "#db";
 
 const onRequestHook = async (request: FastifyRequest, reply: FastifyReply) => {
   const sessionId = request.cookies.sessionId;
@@ -21,6 +22,8 @@ const onRequestHook = async (request: FastifyRequest, reply: FastifyReply) => {
       msg: "Unauthorized",
     });
   }
+
+  request.userId = isSession.userId;
 };
 
 export default onRequestHook;

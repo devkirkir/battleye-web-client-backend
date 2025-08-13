@@ -65,7 +65,7 @@ export class SqliteAdapter implements DatabaseAdapter {
 
     const isSessionExpired = Number(session.expires_in) > Date.now();
 
-    return isSessionExpired;
+    return isSessionExpired ? { userId: session.user_id } : false;
   }
 
   private async initData() {

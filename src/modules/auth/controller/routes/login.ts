@@ -46,14 +46,14 @@ function login(fastify: FastifyInstance) {
         return reply.status(400).send({ success: false, msg: "Incorrect auth data" });
       }
 
-      reply.setCookie("sessionId", String(loginSuccess), {
-        httpOnly: true,
-        maxAge: 10800,
-      });
-
-      reply.send({
-        success: true,
-      });
+      reply
+        .setCookie("sessionId", String(loginSuccess), {
+          httpOnly: true,
+          maxAge: 10800,
+        })
+        .send({
+          success: true,
+        });
     },
   );
 }

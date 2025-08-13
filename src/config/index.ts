@@ -10,6 +10,9 @@ interface AppConfig {
     adapterDB: SupportedAdapters;
     logs?: boolean;
   };
+  rcon: {
+    timeout: number;
+  };
   labels: {
     db: string;
     dbError: string;
@@ -23,6 +26,9 @@ const appConfig: AppConfig = {
   db: {
     adapterDB: (process.env.DB_ADAPTER || "sqlite") as SupportedAdapters,
     logs: !!process.env.DB_LOGS || true,
+  },
+  rcon: {
+    timeout: 50000,
   },
   labels: {
     db: "[DB]",

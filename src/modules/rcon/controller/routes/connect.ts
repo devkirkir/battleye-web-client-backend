@@ -1,6 +1,5 @@
 import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
-import { rconPool } from "index.js";
 
 import rconService from "../../service/index.js";
 
@@ -17,15 +16,14 @@ const ReplySuccessSchema = Type.Object({
 const ReplyErrorSchema = Type.Object({
   success: Type.Boolean(),
   msg: Type.String(),
-  validation: Type.Object({
-    instancePath: Type.String(),
-    schemaPath: Type.String(),
-    keyword: Type.String(),
-    params: Type.Object({
-      missingProperty: Type.String(),
-    }),
-    message: Type.String(),
-  }),
+  errors: Type.Optional(
+    Type.Array(
+      Type.Object({
+        message: Type.String(),
+        property: Type.Optional(Type.String()),
+      }),
+    ),
+  ),
 });
 
 export type RequestSchemaType = Static<typeof RequestSchema>;
@@ -43,12 +41,12 @@ function connect(fastify: FastifyInstance) {
       },
     },
     async (request, reply) => {
+      if (!request.userId) return reply.status(400).send({ success: false, msg: "Unauthorized" });
+
       const response = await rconService().connect(request.body);
+      if (!response.isConnected) return reply.status(400).send({ success: false, msg: response.msg });
 
-      if (!response.isConnected) return reply.status(400).send({ success: false, msg: response.errorMsg });
-
-      // TODO сделать нормальную авторизацию
-      rconPool.set("1", response.rcon);
+      fastify.rconPool.set(request.userId, response.rcon);
 
       reply.send({ success: response.isConnected });
     },
