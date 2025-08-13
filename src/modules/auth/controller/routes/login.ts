@@ -15,6 +15,14 @@ const ReplySuccessSchema = Type.Object({
 const ReplyErrorSchema = Type.Object({
   success: Type.Boolean(),
   msg: Type.String(),
+  errors: Type.Optional(
+    Type.Array(
+      Type.Object({
+        message: Type.String(),
+        property: Type.Optional(Type.String()),
+      }),
+    ),
+  ),
 });
 
 type RequestSchemaType = Static<typeof RequestSchema>;

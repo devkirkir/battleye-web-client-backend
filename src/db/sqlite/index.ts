@@ -31,6 +31,7 @@ export class SqliteAdapter implements DatabaseAdapter {
     await this.initData();
   }
 
+  // думал сделать простую авторизацию, но нужно было всё таки просто JWT использовать...
   async login({ username, password }: LoginUserData): Promise<boolean | string> {
     if (!this.db) throw new Error(`${appConfig.labels.dbError} Database not initialized`);
 

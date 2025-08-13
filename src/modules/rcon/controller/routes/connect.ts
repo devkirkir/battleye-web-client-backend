@@ -15,12 +15,22 @@ const ReplySuccessSchema = Type.Object({
 });
 
 const ReplyErrorSchema = Type.Object({
-  error: Type.String(),
+  success: Type.Boolean(),
+  msg: Type.String(),
+  validation: Type.Object({
+    instancePath: Type.String(),
+    schemaPath: Type.String(),
+    keyword: Type.String(),
+    params: Type.Object({
+      missingProperty: Type.String(),
+    }),
+    message: Type.String(),
+  }),
 });
 
 export type RequestSchemaType = Static<typeof RequestSchema>;
 
-async function connect(fastify: FastifyInstance) {
+function connect(fastify: FastifyInstance) {
   return fastify.post<{ Body: RequestSchemaType }>(
     "/connect",
     {
@@ -35,7 +45,7 @@ async function connect(fastify: FastifyInstance) {
     async (request, reply) => {
       const response = await rconService().connect(request.body);
 
-      if (!response.isConnected) return reply.status(400).send({ error: response.errorMsg });
+      if (!response.isConnected) return reply.status(400).send({ success: false, msg: response.errorMsg });
 
       // TODO сделать нормальную авторизацию
       rconPool.set("1", response.rcon);

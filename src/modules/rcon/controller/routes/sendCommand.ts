@@ -11,12 +11,13 @@ const ReplySuccessSchema = Type.Object({
 });
 
 const ReplyErrorSchema = Type.Object({
-  error: Type.String(),
+  success: Type.Boolean(),
+  msg: Type.String(),
 });
 
 export type RequestSchemaType = Static<typeof RequestSchema>;
 
-async function sendCommand(fastify: FastifyInstance) {
+function sendCommand(fastify: FastifyInstance) {
   return fastify.post<{ Body: RequestSchemaType }>(
     "/send",
     {
@@ -29,7 +30,7 @@ async function sendCommand(fastify: FastifyInstance) {
       },
     },
     (request, reply) => {
-      if (rconPool.size === 0) return reply.status(400).send({ error: "RCON Instance is not created" });
+      if (rconPool.size === 0) return reply.status(400).send({ success: false, msg: "RCON Instance is not created" });
 
       // TODO сделать нормальную авторизацию
       rconPool.get("1")?.commandSend(request.body.command);

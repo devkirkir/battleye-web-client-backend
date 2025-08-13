@@ -9,6 +9,8 @@ import appConfig from "#config/index.js";
 import DBAdapter from "#db";
 import rconController from "#rcon/controller/index.js";
 import wsController from "#ws/controller/index.js";
+import onRequestHook from "hooks/onRequest.js";
+import errorHandler from "handlers/errorHandler.js";
 
 export const rconPool = new Map<string, RCON>();
 export const wsConnection: { client: WebSocket | null } = { client: null };
@@ -16,41 +18,19 @@ export const wsConnection: { client: WebSocket | null } = { client: null };
 const buiildApp = () => {
   const app: FastifyInstance = Fastify({
     logger: true,
+    ajv: {
+      customOptions: {
+        allErrors: true,
+      },
+    },
   });
 
   app.register(websocket);
   app.register(fastifyCookie);
 
-  app.setErrorHandler((error, request, reply) => {
-    console.log("[APP ERROR]: ", error);
+  app.setErrorHandler(errorHandler);
 
-    reply.status(500).send({
-      success: false,
-      msg: "Internal server error",
-    });
-  });
-
-  app.addHook("onRequest", async (request, reply) => {
-    const sessionId = request.cookies.sessionId;
-
-    if (!sessionId && request.url === "/auth/login") return;
-
-    if (!sessionId) {
-      return reply.status(400).send({
-        success: false,
-        msg: "Unauthorized",
-      });
-    }
-
-    const isSession = await DBAdapter.checkAuth(sessionId);
-
-    if (!isSession) {
-      return reply.status(400).send({
-        success: false,
-        msg: "Unauthorized",
-      });
-    }
-  });
+  app.addHook("onRequest", onRequestHook);
 
   app.register(authController, { prefix: "/auth" });
   app.register(rconController, { prefix: "/rcon" });
