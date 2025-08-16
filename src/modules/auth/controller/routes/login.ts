@@ -1,6 +1,7 @@
-import { ReplyErrorSchema, ReplySuccessSchema } from "#schemas/index.js";
 import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
+
+import { ReplyErrorSchema, ReplySuccessSchema } from "#schemas/index.js";
 
 const RequestSchema = Type.Object({
   username: Type.String(),

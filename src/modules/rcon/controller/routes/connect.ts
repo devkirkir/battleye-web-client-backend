@@ -1,8 +1,9 @@
 import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
 
-import rconService from "../../service/index.js";
 import { ReplyErrorSchema, ReplySuccessSchema } from "#schemas/index.js";
+
+import rconService from "../../service/index.js";
 
 const RequestSchema = Type.Object({
   address: Type.String(),

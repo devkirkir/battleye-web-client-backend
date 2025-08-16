@@ -17,6 +17,10 @@ interface AppConfig {
     db: string;
     dbError: string;
   };
+  user: {
+    username: string;
+    password: string;
+  };
 }
 
 const appConfig: AppConfig = {
@@ -33,6 +37,10 @@ const appConfig: AppConfig = {
   labels: {
     db: "[DB]",
     dbError: "[DB ERROR]",
+  },
+  user: {
+    username: process.env.DEFAULT_USERNAME || "admin",
+    password: process.env.DEFAULT_PASSWORD || "",
   },
 };
 

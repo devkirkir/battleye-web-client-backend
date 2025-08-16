@@ -6,10 +6,9 @@ import onRequestHook from "hooks/onRequest.js";
 
 import authController from "#auth/controller/index.js";
 import appConfig from "#config/index.js";
+import plugins from "#plugins/index.js";
 import rconController from "#rcon/controller/index.js";
 import wsController from "#ws/controller/index.js";
-
-import plugins from "#plugins/index.js";
 
 export const wsConnection: { client: WebSocket | null } = { client: null };
 
@@ -27,7 +26,7 @@ const buiildApp = () => {
 
   app.decorateRequest("userId", null);
 
-  for (let plugin of plugins) {
+  for (const plugin of plugins) {
     app.register(plugin);
   }
 

@@ -1,5 +1,6 @@
 import RCON from "battleye-node";
-import { DatabaseAdapter } from "./db.ts";
+
+import type { DatabaseAdapter } from "./db.ts";
 
 declare module "fastify" {
   interface FastifyInstance {

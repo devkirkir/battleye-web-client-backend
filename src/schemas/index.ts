@@ -1,4 +1,4 @@
-import { Static, Type } from "@sinclair/typebox";
+import { Type } from "@sinclair/typebox";
 
 export const ReplySuccessSchema = Type.Object({
   success: Type.Boolean(),

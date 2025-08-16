@@ -14,7 +14,7 @@ const onRequestHook = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 
   const appInstance = request.server;
-  const isSession = await appInstance.db.checkAuth(sessionId);
+  const isSession = await appInstance.db.checkSession(sessionId);
 
   if (!isSession) {
     return reply.status(400).send({
