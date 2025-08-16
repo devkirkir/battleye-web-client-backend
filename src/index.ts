@@ -23,13 +23,13 @@ const buiildApp = () => {
     },
   });
 
+  app.setErrorHandler(errorHandler);
+
   app.decorateRequest("userId", null);
 
   for (let plugin of plugins) {
     app.register(plugin);
   }
-
-  app.setErrorHandler(errorHandler);
 
   app.addHook("onRequest", onRequestHook);
 

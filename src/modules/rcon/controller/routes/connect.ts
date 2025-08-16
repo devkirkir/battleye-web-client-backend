@@ -2,28 +2,12 @@ import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
 
 import rconService from "../../service/index.js";
+import { ReplyErrorSchema, ReplySuccessSchema } from "#schemas/index.js";
 
 const RequestSchema = Type.Object({
   address: Type.String(),
   port: Type.String(),
   password: Type.String(),
-});
-
-const ReplySuccessSchema = Type.Object({
-  success: Type.Boolean(),
-});
-
-const ReplyErrorSchema = Type.Object({
-  success: Type.Boolean(),
-  msg: Type.String(),
-  errors: Type.Optional(
-    Type.Array(
-      Type.Object({
-        message: Type.String(),
-        property: Type.Optional(Type.String()),
-      }),
-    ),
-  ),
 });
 
 export type RequestSchemaType = Static<typeof RequestSchema>;

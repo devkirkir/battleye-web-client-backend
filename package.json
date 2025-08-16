@@ -17,6 +17,7 @@
     "#config/*": "./src/config/*",
     "#plugins/*": "./src/plugins/*",
     "#db": "./src/db/index.js",
+    "#schemas/*": "./src/schemas/*",
     "#auth/*": "./src/modules/auth/*",
     "#rcon/*": "./src/modules/rcon/*",
     "#ws/*": "./src/modules/ws/*"

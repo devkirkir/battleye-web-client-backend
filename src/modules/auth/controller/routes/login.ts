@@ -1,26 +1,10 @@
+import { ReplyErrorSchema, ReplySuccessSchema } from "#schemas/index.js";
 import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
 
 const RequestSchema = Type.Object({
   username: Type.String(),
   password: Type.String(),
-});
-
-const ReplySuccessSchema = Type.Object({
-  success: Type.Boolean(),
-});
-
-const ReplyErrorSchema = Type.Object({
-  success: Type.Boolean(),
-  msg: Type.String(),
-  errors: Type.Optional(
-    Type.Array(
-      Type.Object({
-        message: Type.String(),
-        property: Type.Optional(Type.String()),
-      }),
-    ),
-  ),
 });
 
 type RequestSchemaType = Static<typeof RequestSchema>;

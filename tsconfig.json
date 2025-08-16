@@ -13,6 +13,7 @@
       "#config/*": ["./config/*"],
       "#plugins/*": ["./plugins/*"],
       "#db/*": ["./db/index.js"],
+      "#schemas/*": ["./schemas/index.js"],
       "#auth/*": ["./modules/auth/*"],
       "#rcon/*": ["./modules/rcon/*"],
       "#ws/*": ["./modules/ws/*"]
