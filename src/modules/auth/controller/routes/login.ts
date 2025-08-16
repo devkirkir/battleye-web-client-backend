@@ -1,8 +1,6 @@
 import { Static, Type } from "@sinclair/typebox";
 import type { FastifyInstance } from "fastify";
 
-import authService from "../../service/index.js";
-
 const RequestSchema = Type.Object({
   username: Type.String(),
   password: Type.String(),
@@ -40,7 +38,7 @@ function login(fastify: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const loginSuccess = await authService.login(request.body);
+      const loginSuccess = await fastify.db.login(request.body);
 
       if (!loginSuccess) {
         return reply.status(400).send({ success: false, msg: "Incorrect auth data" });

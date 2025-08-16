@@ -1,8 +1,10 @@
 import RCON from "battleye-node";
+import { DatabaseAdapter } from "./db.ts";
 
 declare module "fastify" {
   interface FastifyInstance {
     rconPool: Map<number, RCON>;
+    db: DatabaseAdapter;
   }
 
   interface FastifyRequest {

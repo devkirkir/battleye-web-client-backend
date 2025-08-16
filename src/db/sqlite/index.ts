@@ -68,6 +68,14 @@ export class SqliteAdapter implements DatabaseAdapter {
     return isSessionExpired ? { userId: session.user_id } : false;
   }
 
+  async close() {
+    if (!this.db) throw new Error(`${appConfig.labels.dbError} Database not initialized`);
+
+    this.db.close();
+
+    if (appConfig.db.logs) console.log(`${appConfig.labels.db} Database ${appConfig.db.adapterDB} connection closed`);
+  }
+
   private async initData() {
     if (!this.db) throw new Error(`${appConfig.labels.dbError} Database not initialized`);
 

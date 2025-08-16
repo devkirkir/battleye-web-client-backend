@@ -1,16 +1,15 @@
-import fastifyCookie from "@fastify/cookie";
-import websocket, { type WebSocket } from "@fastify/websocket";
+import { type WebSocket } from "@fastify/websocket";
 import type { FastifyInstance } from "fastify";
 import Fastify from "fastify";
 import errorHandler from "handlers/errorHandler.js";
 import onRequestHook from "hooks/onRequest.js";
-import rconPlugin from "plugins/rconPlugin.js";
 
 import authController from "#auth/controller/index.js";
 import appConfig from "#config/index.js";
-import DBAdapter from "#db";
 import rconController from "#rcon/controller/index.js";
 import wsController from "#ws/controller/index.js";
+
+import plugins from "#plugins/index.js";
 
 export const wsConnection: { client: WebSocket | null } = { client: null };
 
@@ -26,9 +25,9 @@ const buiildApp = () => {
 
   app.decorateRequest("userId", null);
 
-  app.register(websocket);
-  app.register(fastifyCookie);
-  app.register(rconPlugin);
+  for (let plugin of plugins) {
+    app.register(plugin);
+  }
 
   app.setErrorHandler(errorHandler);
 
@@ -46,7 +45,7 @@ const start = async () => {
     const app = buiildApp();
 
     await app.listen({ port: appConfig.app.port || 5000 });
-    await DBAdapter.connect();
+    await app.db.connect();
   } catch (err) {
     console.log("[START SERVER ERROR]: ", err);
   }

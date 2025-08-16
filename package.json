@@ -15,6 +15,7 @@
   "author": "",
   "imports": {
     "#config/*": "./src/config/*",
+    "#plugins/*": "./src/plugins/*",
     "#db": "./src/db/index.js",
     "#auth/*": "./src/modules/auth/*",
     "#rcon/*": "./src/modules/rcon/*",

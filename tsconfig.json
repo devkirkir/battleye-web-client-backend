@@ -11,6 +11,7 @@
     "baseUrl": "./src",
     "paths": {
       "#config/*": ["./config/*"],
+      "#plugins/*": ["./plugins/*"],
       "#db/*": ["./db/index.js"],
       "#auth/*": ["./modules/auth/*"],
       "#rcon/*": ["./modules/rcon/*"],
