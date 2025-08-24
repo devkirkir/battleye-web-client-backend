@@ -1,10 +1,9 @@
-import "dotenv/config";
-
 type SupportedAdapters = "sqlite";
 
 interface AppConfig {
   app: {
     port: number;
+    corsOrigin: string | boolean;
   };
   db: {
     adapterDB: SupportedAdapters;
@@ -26,6 +25,7 @@ interface AppConfig {
 const appConfig: AppConfig = {
   app: {
     port: Number(process.env.APP_PORT) || 5000,
+    corsOrigin: process.env.APP_CORS_ORIGIN || true,
   },
   db: {
     adapterDB: (process.env.DB_ADAPTER || "sqlite") as SupportedAdapters,

@@ -26,8 +26,12 @@ const buiildApp = () => {
 
   app.decorateRequest("userId", null);
 
-  for (const plugin of plugins) {
-    app.register(plugin);
+  for (const { plugin, options } of plugins) {
+    if (options) {
+      app.register(plugin, options);
+    } else {
+      app.register(plugin);
+    }
   }
 
   app.addHook("onRequest", onRequestHook);
