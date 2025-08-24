@@ -7,7 +7,7 @@ interface AppConfig {
   };
   db: {
     adapterDB: SupportedAdapters;
-    logs?: boolean;
+    logs: string | undefined;
   };
   rcon: {
     timeout: number;
@@ -29,7 +29,7 @@ const appConfig: AppConfig = {
   },
   db: {
     adapterDB: (process.env.DB_ADAPTER || "sqlite") as SupportedAdapters,
-    logs: !!process.env.DB_LOGS || true,
+    logs: process.env.DB_LOGS,
   },
   rcon: {
     timeout: 50000,

@@ -13,7 +13,7 @@ class DatabaseConnection {
     if (this.db) return;
 
     const dirPath = path.dirname(fileURLToPath(import.meta.url)),
-      dataDir = path.join(dirPath, "/data");
+      dataDir = path.join(path.resolve(dirPath, "../"), "/data");
 
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir);

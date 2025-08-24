@@ -9,6 +9,7 @@ const RequestSchema = Type.Object({
 });
 
 type RequestSchemaType = Static<typeof RequestSchema>;
+type ReplySchemaType = Static<typeof ReplyErrorSchema>;
 
 function login(fastify: FastifyInstance) {
   fastify.post<{ Body: RequestSchemaType }>(
@@ -26,7 +27,16 @@ function login(fastify: FastifyInstance) {
       const loginSuccess = await fastify.db.login(request.body);
 
       if (!loginSuccess) {
-        return reply.status(400).send({ success: false, msg: "Incorrect auth data" });
+        const replyObj: ReplySchemaType = {
+          success: false,
+          msg: "Incorrect auth data",
+          errors: [
+            { message: "Incorrect data", property: "username" },
+            { message: "Incorrect data", property: "password" },
+          ],
+        };
+
+        return reply.status(400).send(replyObj);
       }
 
       reply
