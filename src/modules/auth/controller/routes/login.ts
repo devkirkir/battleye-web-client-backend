@@ -30,10 +30,6 @@ function login(fastify: FastifyInstance) {
         const replyObj: ReplySchemaType = {
           success: false,
           msg: "Incorrect auth data",
-          errors: [
-            { message: "Incorrect data", property: "username" },
-            { message: "Incorrect data", property: "password" },
-          ],
         };
 
         return reply.status(400).send(replyObj);
@@ -43,6 +39,8 @@ function login(fastify: FastifyInstance) {
         .setCookie("sessionId", String(loginSuccess), {
           httpOnly: true,
           maxAge: 10800,
+          sameSite: "none",
+          secure: true,
         })
         .send({
           success: true,

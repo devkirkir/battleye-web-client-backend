@@ -13,7 +13,9 @@ class SessionService {
 
   create(userId: number) {
     const sessionId = uuidv4(),
-      expires = Date.now() + 1000 * 60 * 60 * 2;
+      expires = Date.now() + 1000 * 60 * 60 * 3;
+
+    console.log(expires - Date.now());
 
     this.db.prepare(SQL.SESSION.CREATE).run(sessionId, userId, expires);
 
@@ -33,9 +35,13 @@ class SessionService {
 
     if (!session?.expires_in) return false;
 
-    const isSessionExpired = Number(session.expires_in) > Date.now();
+    const isSessionExpired = Number(session.expires_in) < Date.now();
 
-    return isSessionExpired ? { userId: session.user_id } : false;
+    if (isSessionExpired) {
+      this.delete(session.user_id);
+    }
+
+    return !isSessionExpired ? { userId: session.user_id } : false;
   }
 }
 
