@@ -13,7 +13,7 @@ class AuthService {
     this.session = session;
   }
 
-  async login({ username, password }: LoginUserData): Promise<false | string> {
+  async login({ username, password }: LoginUserData): Promise<false | { sessionId: string; userId: number }> {
     const dbUser = this.users.getOne(username);
 
     if (!dbUser?.username || !dbUser?.password || !dbUser?.user_id) return false;
@@ -24,7 +24,7 @@ class AuthService {
     this.session.delete(dbUser.user_id);
     const sessionId = this.session.create(dbUser.user_id);
 
-    return sessionId;
+    return { sessionId, userId: dbUser.user_id };
   }
 }
 

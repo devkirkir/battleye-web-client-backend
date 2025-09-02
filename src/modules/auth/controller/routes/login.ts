@@ -8,6 +8,17 @@ const RequestSchema = Type.Object({
   password: Type.String(),
 });
 
+const ReplySuccessSchemaLogin = Type.Intersect([
+  ReplySuccessSchema,
+  Type.Object({
+    data: Type.Optional(
+      Type.Object({
+        userId: Type.Number(),
+      }),
+    ),
+  }),
+]);
+
 type RequestSchemaType = Static<typeof RequestSchema>;
 type ReplySchemaType = Static<typeof ReplyErrorSchema>;
 
@@ -18,7 +29,7 @@ function login(fastify: FastifyInstance) {
       schema: {
         body: RequestSchema,
         response: {
-          200: ReplySuccessSchema,
+          200: ReplySuccessSchemaLogin,
           400: ReplyErrorSchema,
         },
       },
@@ -44,6 +55,9 @@ function login(fastify: FastifyInstance) {
         })
         .send({
           success: true,
+          data: {
+            userId: loginSuccess.userId,
+          },
         });
     },
   );

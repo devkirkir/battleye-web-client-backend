@@ -15,8 +15,6 @@ class SessionService {
     const sessionId = uuidv4(),
       expires = Date.now() + 1000 * 60 * 60 * 3;
 
-    console.log(expires - Date.now());
-
     this.db.prepare(SQL.SESSION.CREATE).run(sessionId, userId, expires);
 
     return sessionId;
