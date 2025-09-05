@@ -7,7 +7,7 @@ const onRequestHook = async (request: FastifyRequest, reply: FastifyReply) => {
   if (!sessionId && isLoginPath) return;
 
   if (!sessionId) {
-    return reply.status(400).send({
+    return reply.status(401).send({
       success: false,
       msg: "Unauthorized",
     });
@@ -17,7 +17,7 @@ const onRequestHook = async (request: FastifyRequest, reply: FastifyReply) => {
   const isSession = await appInstance.db.checkSession(sessionId);
 
   if (!isSession) {
-    return reply.status(400).clearCookie("sessionId").send({
+    return reply.status(401).clearCookie("sessionId").send({
       success: false,
       msg: "Unauthorized",
     });

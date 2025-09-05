@@ -13,7 +13,7 @@ class AuthService {
     this.session = session;
   }
 
-  async login({ username, password }: LoginUserData): Promise<false | { sessionId: string; userId: number }> {
+  async login({ username, password }: LoginUserData) {
     const dbUser = this.users.getOne(username);
 
     if (!dbUser?.username || !dbUser?.password || !dbUser?.user_id) return false;

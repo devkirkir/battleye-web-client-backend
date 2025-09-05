@@ -15,7 +15,7 @@ export class SqliteAdapter implements DatabaseAdapter {
   private sessions!: SessionService;
   private auth!: AuthService;
 
-  async connect(): Promise<void> {
+  async connect() {
     this.connection.connect();
 
     if (!this.connection.instance) throw new Error(`${appConfig.labels.dbError} Database not initialized`);
@@ -27,15 +27,15 @@ export class SqliteAdapter implements DatabaseAdapter {
     await this.initData();
   }
 
-  async login(userData: LoginUserData): Promise<false | string> {
+  async login(userData: LoginUserData) {
     return this.auth.login(userData);
   }
 
-  async checkSession(sessionId: string): Promise<false | { userId: number }> {
+  async checkSession(sessionId: string) {
     return this.sessions.valid(sessionId);
   }
 
-  async close(): Promise<void> {
+  async close() {
     this.connection.close();
   }
 

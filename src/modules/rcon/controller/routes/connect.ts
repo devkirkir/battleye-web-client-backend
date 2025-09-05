@@ -22,11 +22,12 @@ function connect(fastify: FastifyInstance) {
         response: {
           200: ReplySuccessSchema,
           400: ReplyErrorSchema,
+          401: ReplyErrorSchema,
         },
       },
     },
     async (request, reply) => {
-      if (!request.userId) return reply.status(400).send({ success: false, msg: "Unauthorized" });
+      if (!request.userId) return reply.status(401).send({ success: false, msg: "Unauthorized" });
 
       const response = await rconService().connect(request.body);
       if (!response.isConnected) return reply.status(400).send({ success: false, msg: response.msg });
